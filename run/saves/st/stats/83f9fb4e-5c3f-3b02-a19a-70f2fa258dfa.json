@@ -1,0 +1,32 @@
+{
+  "stats": {
+    "minecraft:custom": {
+      "minecraft:sprint_one_cm": 8820,
+      "minecraft:time_since_rest": 12000,
+      "minecraft:walk_one_cm": 7559,
+      "minecraft:total_world_time": 12000,
+      "minecraft:fly_one_cm": 16081,
+      "minecraft:mob_kills": 2,
+      "minecraft:crouch_one_cm": 1864,
+      "minecraft:sneak_time": 632,
+      "minecraft:play_time": 12000,
+      "minecraft:damage_dealt": 1080,
+      "minecraft:jump": 47,
+      "minecraft:time_since_death": 12000
+    },
+    "minecraft:used": {
+      "minecraft:elder_guardian_spawn_egg": 1,
+      "minecraft:guardian_spawn_egg": 1,
+      "minecraft:netherite_sword": 14
+    },
+    "minecraft:picked_up": {
+      "minecraft:prismarine_crystals": 2,
+      "minecraft:wet_sponge": 1
+    },
+    "minecraft:killed": {
+      "minecraft:elder_guardian": 1,
+      "minecraft:guardian": 1
+    }
+  },
+  "DataVersion": 4671
+}

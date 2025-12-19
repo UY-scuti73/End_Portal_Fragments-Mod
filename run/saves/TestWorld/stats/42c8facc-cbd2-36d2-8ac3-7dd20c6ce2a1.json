@@ -1,0 +1,26 @@
+{
+  "stats": {
+    "minecraft:used": {
+      "minecraft:ender_eye": 1,
+      "minecraft:end_portal_frame": 1,
+      "epfragments73:wealthy_end_portal_frame": 1,
+      "epfragments73:golden_end_portal_frame": 2,
+      "epfragments73:ancient_end_portal_frame": 1
+    },
+    "minecraft:custom": {
+      "minecraft:sprint_one_cm": 1141,
+      "minecraft:time_since_rest": 1813,
+      "minecraft:walk_one_cm": 274,
+      "minecraft:total_world_time": 2381,
+      "minecraft:leave_game": 1,
+      "minecraft:fly_one_cm": 8215,
+      "minecraft:crouch_one_cm": 31,
+      "minecraft:sneak_time": 21,
+      "minecraft:play_time": 2372,
+      "minecraft:deaths": 1,
+      "minecraft:jump": 14,
+      "minecraft:time_since_death": 1779
+    }
+  },
+  "DataVersion": 4671
+}

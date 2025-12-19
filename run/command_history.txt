@@ -1,0 +1,50 @@
+/locate structure minecraft:stronghold
+/tp @s 576 ~ 1360
+/locate structure minecraft:stronghold
+/tp @s -1552 ~ 896
+/locate structure minecraft:stronghold
+/tp @s -1936 ~ 896
+/tp Player833 10000 ~ ~
+/locate structure minecraft:stronghold
+/tp @s 11168 ~ -1296
+/locate structure minecraft:stronghold
+/tp @s -1680 ~ -384
+/locate structure minecraft:stronghold
+/tp @s -1248 ~ 912
+/locate structure minecraft:stronghold
+/tp @s -1440 ~ -576
+/locate structure minecraft:stronghold
+/tp @s 144 ~ -1520
+/locate structure minecraft:stronghold
+/tp @s -1216 ~ -1216
+/locate structure minecraft:stronghold
+/tp @s -1200 ~ 1072
+/locate structure minecraft:stronghold
+/tp @s -1296 ~ -1136
+/kill Player785
+/locate structure minecraft:stronghold
+/tp @s 496 ~ -1968
+/tp Player418 20000
+/tp Player418 20000 5.81 -1963.14
+/locate structure minecraft:stronghold
+/tp @s 20368 ~ -2848
+/locate structure minecraft:stronghold
+/tp @s 640 ~ 1504
+/locate structure minecraft:stronghold
+/tp @s -1072 ~ 1024
+/tp @p 10000 ~ ~
+/locate structure minecraft:stronghold
+/tp @s 8464 ~ 1872
+/tp @p -10000 ~ ~
+/locate structure minecraft:stronghold
+/tp @s -11120 ~ 3216
+/tp @p -10000 ~ -10000
+/locate structure minecraft:stronghold
+/tp @s -11408 ~ -9008
+/tp @p -10000 ~ 10000
+/locate structure minecraft:stronghold
+/tp @s -10144 ~ 11024
+/tp @s 10144 ~ 11024
+/locate structure minecraft:stronghold
+/tp @s 10192 ~ 10880
+/effect give Player892 minecraft:strength 10 255

@@ -1,0 +1,22 @@
+{
+  "stats": {
+    "minecraft:used": {
+      "epfragments73:ancient_end_portal_frame": 2,
+      "epfragments73:sandy_end_portal_frame": 1
+    },
+    "minecraft:picked_up": {
+      "minecraft:wheat_seeds": 1
+    },
+    "minecraft:custom": {
+      "minecraft:sprint_one_cm": 380,
+      "minecraft:time_since_rest": 108,
+      "minecraft:walk_one_cm": 125,
+      "minecraft:total_world_time": 108,
+      "minecraft:fly_one_cm": 598,
+      "minecraft:play_time": 108,
+      "minecraft:jump": 2,
+      "minecraft:time_since_death": 108
+    }
+  },
+  "DataVersion": 4671
+}

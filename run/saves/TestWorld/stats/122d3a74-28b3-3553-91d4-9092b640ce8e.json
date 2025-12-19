@@ -1,0 +1,23 @@
+{
+  "stats": {
+    "minecraft:used": {
+      "epfragments73:ruined_end_portal_frame": 1,
+      "minecraft:prismarine_bricks": 1,
+      "minecraft:smooth_sandstone": 1
+    },
+    "minecraft:custom": {
+      "minecraft:sprint_one_cm": 1470,
+      "minecraft:time_since_rest": 155838,
+      "minecraft:walk_one_cm": 4098,
+      "minecraft:total_world_time": 156000,
+      "minecraft:fly_one_cm": 5361,
+      "minecraft:crouch_one_cm": 30,
+      "minecraft:sneak_time": 53,
+      "minecraft:play_time": 156000,
+      "minecraft:deaths": 1,
+      "minecraft:jump": 15,
+      "minecraft:time_since_death": 155814
+    }
+  },
+  "DataVersion": 4671
+}

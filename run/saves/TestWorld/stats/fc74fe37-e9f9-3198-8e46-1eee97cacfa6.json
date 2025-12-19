@@ -1,0 +1,17 @@
+{
+  "stats": {
+    "minecraft:used": {
+      "minecraft:end_portal_frame": 1,
+      "epfragments73:withered_end_portal_frame": 9
+    },
+    "minecraft:custom": {
+      "minecraft:time_since_rest": 6000,
+      "minecraft:walk_one_cm": 1301,
+      "minecraft:total_world_time": 6000,
+      "minecraft:play_time": 6000,
+      "minecraft:jump": 3,
+      "minecraft:time_since_death": 6000
+    }
+  },
+  "DataVersion": 4671
+}

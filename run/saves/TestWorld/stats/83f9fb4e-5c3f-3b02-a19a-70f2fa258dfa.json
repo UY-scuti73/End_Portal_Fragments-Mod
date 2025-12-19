@@ -1,0 +1,21 @@
+{
+  "stats": {
+    "minecraft:used": {
+      "epfragments73:sandy_end_portal_frame": 1
+    },
+    "minecraft:custom": {
+      "minecraft:sprint_one_cm": 7144,
+      "minecraft:time_since_rest": 2099,
+      "minecraft:walk_one_cm": 1341,
+      "minecraft:total_world_time": 2107,
+      "minecraft:leave_game": 1,
+      "minecraft:fly_one_cm": 20590,
+      "minecraft:crouch_one_cm": 754,
+      "minecraft:sneak_time": 158,
+      "minecraft:play_time": 2099,
+      "minecraft:jump": 73,
+      "minecraft:time_since_death": 2099
+    }
+  },
+  "DataVersion": 4671
+}

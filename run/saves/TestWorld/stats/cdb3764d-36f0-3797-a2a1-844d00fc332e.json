@@ -1,0 +1,20 @@
+{
+  "stats": {
+    "minecraft:custom": {
+      "minecraft:sprint_one_cm": 728,
+      "minecraft:time_since_rest": 6000,
+      "minecraft:walk_one_cm": 808,
+      "minecraft:total_world_time": 6000,
+      "minecraft:fly_one_cm": 9162,
+      "minecraft:play_time": 6000,
+      "minecraft:jump": 20,
+      "minecraft:time_since_death": 6000
+    },
+    "minecraft:used": {
+      "minecraft:ender_eye": 2,
+      "minecraft:end_portal_frame": 2,
+      "epfragments73:golden_end_portal_frame": 1
+    }
+  },
+  "DataVersion": 4671
+}

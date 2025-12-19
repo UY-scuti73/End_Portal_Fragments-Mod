@@ -1,0 +1,35 @@
+{
+  "stats": {
+    "minecraft:custom": {
+      "minecraft:sprint_one_cm": 4957,
+      "minecraft:time_since_rest": 7534,
+      "minecraft:walk_one_cm": 2175,
+      "minecraft:total_world_time": 7534,
+      "minecraft:fly_one_cm": 3323,
+      "minecraft:crouch_one_cm": 193,
+      "minecraft:walk_on_water_one_cm": 1959,
+      "minecraft:sneak_time": 40,
+      "minecraft:play_time": 7534,
+      "minecraft:jump": 17,
+      "minecraft:time_since_death": 7534
+    },
+    "minecraft:used": {
+      "epfragments73:ruined_end_portal_frame": 1,
+      "minecraft:water_bucket": 6,
+      "minecraft:jungle_planks": 6,
+      "minecraft:ender_eye": 4,
+      "minecraft:end_portal_frame": 4,
+      "epfragments73:withered_end_portal_frame": 1,
+      "epfragments73:gusty_end_portal_frame": 1,
+      "epfragments73:wealthy_end_portal_frame": 1,
+      "epfragments73:golden_end_portal_frame": 3,
+      "epfragments73:dark_end_portal_frame": 1,
+      "epfragments73:ancient_end_portal_frame": 5,
+      "epfragments73:sandy_end_portal_frame": 1
+    },
+    "minecraft:picked_up": {
+      "minecraft:wheat_seeds": 4
+    }
+  },
+  "DataVersion": 4671
+}
