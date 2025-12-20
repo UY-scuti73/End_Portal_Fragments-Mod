@@ -2,6 +2,8 @@ package xyz.quazaros.epfragments73.item.EndPortals;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import xyz.quazaros.epfragments73.main;
@@ -101,5 +103,14 @@ public class PortalHelper {
         for (BlockPos blockPos : portalPos) {
             world.setBlockState(blockPos, Blocks.END_PORTAL.getDefaultState());
         }
+
+        world.playSound(
+                null,
+                portalPos.get(4),
+                SoundEvents.BLOCK_END_PORTAL_SPAWN,
+                SoundCategory.BLOCKS,
+                1.0F,
+                1.0F
+        );
     }
 }
