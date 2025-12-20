@@ -3,11 +3,11 @@
   "id": "epfragments73",
   "version": "${version}",
   "name": "Fragments Of The Final Gate",
-  "description": "",
+  "description": "Collect different eyes throughout the world to unlock the end",
   "authors": ["Bowser_The_Boss"],
   "contact": {},
   "license": "All-Rights-Reserved",
-  "icon": "assets/epfragments73/textures/item/golden_eye.png",
+  "icon": "assets/epfragments73/pack.png",
   "environment": "*",
   "entrypoints": {
     "fabric-datagen": [
