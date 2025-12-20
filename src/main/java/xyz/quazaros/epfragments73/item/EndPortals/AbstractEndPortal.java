@@ -33,6 +33,7 @@ public class AbstractEndPortal extends Block {
     public static final EnumProperty<Direction> FACING = HorizontalFacingBlock.FACING;
     public static final BooleanProperty EYE = Properties.EYE;
 
+    //Defines frame shape for end portal hitbox
     private static final VoxelShape FRAME_SHAPE =
             Block.createCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 13.0D, 16.0D);
     private static final VoxelShape EYE_SHAPE =
