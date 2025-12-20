@@ -1,0 +1,25 @@
+{
+  "stats": {
+    "minecraft:used": {
+      "epfragments73:ruined_end_portal_frame": 3,
+      "minecraft:ender_eye": 4,
+      "epfragments73:withered_end_portal_frame": 1,
+      "epfragments73:gusty_end_portal_frame": 1,
+      "epfragments73:wealthy_end_portal_frame": 1,
+      "epfragments73:golden_end_portal_frame": 1,
+      "epfragments73:dark_end_portal_frame": 1,
+      "epfragments73:ancient_end_portal_frame": 2,
+      "epfragments73:sandy_end_portal_frame": 2
+    },
+    "minecraft:custom": {
+      "minecraft:time_since_rest": 3663,
+      "minecraft:total_world_time": 3709,
+      "minecraft:leave_game": 2,
+      "minecraft:fly_one_cm": 3049,
+      "minecraft:sneak_time": 141,
+      "minecraft:play_time": 3663,
+      "minecraft:time_since_death": 3663
+    }
+  },
+  "DataVersion": 4671
+}

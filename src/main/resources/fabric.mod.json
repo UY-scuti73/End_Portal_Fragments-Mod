@@ -7,7 +7,7 @@
   "authors": ["Bowser_The_Boss"],
   "contact": {},
   "license": "All-Rights-Reserved",
-  "icon": "assets/epfragments73/icon.png",
+  "icon": "assets/epfragments73/textures/item/golden_eye.png",
   "environment": "*",
   "entrypoints": {
     "fabric-datagen": [

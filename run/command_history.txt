@@ -1,7 +1,3 @@
-/locate structure minecraft:stronghold
-/tp @s -10144 ~ 11024
-/tp @s 10144 ~ 11024
-/locate structure minecraft:stronghold
 /tp @s 10192 ~ 10880
 /effect give Player892 minecraft:strength 10 255
 /effect give Player122 minecraft:strength infinite 255
@@ -48,3 +44,7 @@
 /tp Player755 10000 -1 10000
 /locate structure minecraft:trial_chambers
 /tp @s 9840 ~ 9824
+/kill Player365
+/kill Player242
+/locate structure minecraft:stronghold
+/tp @s 1808 ~ 1056
