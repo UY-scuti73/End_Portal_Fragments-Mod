@@ -12,6 +12,8 @@ import xyz.quazaros.epfragments73.item.ModBlocks;
 import xyz.quazaros.epfragments73.item.ModItems;
 
 import static xyz.quazaros.epfragments73.item.EndPortals.PortalHelper.tryPortal;
+import static xyz.quazaros.epfragments73.item.util.LootTables.registerLootTables;
+import static xyz.quazaros.epfragments73.item.util.PortalListener.registerPortalListener;
 
 public class main implements ModInitializer {
     public static final String MOD_ID = "epfragments73";
@@ -21,21 +23,13 @@ public class main implements ModInitializer {
     public void onInitialize() {
         ModItems.registerItems();
         ModBlocks.registerBlocks();
-        LOGGER.info("EndPortalChallenge Initialized");
+
+        //Initializes loot tables
+        registerLootTables();
 
         //Set up listener for normal end portal on use method call
-        UseBlockCallback.EVENT.register((player, world, hand, hitResult) -> {
-            if (world.isClient()) return ActionResult.PASS;
-            BlockPos pos = hitResult.getBlockPos();
-            BlockState state = world.getBlockState(pos);
+        registerPortalListener();
 
-            if (!state.isOf(Blocks.END_PORTAL_FRAME)) {
-                return ActionResult.PASS;
-            }
-
-            tryPortal(world, pos);
-
-            return ActionResult.PASS;
-        });
+        LOGGER.info("EndPortalChallenge Initialized");
     }
 }
