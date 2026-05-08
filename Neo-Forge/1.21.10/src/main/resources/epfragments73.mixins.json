@@ -1,0 +1,17 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "xyz.quazaros.epfragments73.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "PortalRoomPieceMixin"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  }
+}
