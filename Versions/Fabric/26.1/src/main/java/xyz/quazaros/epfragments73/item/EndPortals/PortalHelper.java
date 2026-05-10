@@ -16,7 +16,7 @@ import static xyz.quazaros.epfragments73.item.EndPortals.AbstractEndPortal.EYE;
 
 public class PortalHelper {
 
-    public static boolean tryPortal(Level world, BlockPos pos) {
+    public static void tryPortal(Level world, BlockPos pos) {
 
         // 8x8 search area
         ArrayList<BlockPos> blockArea = new ArrayList<>();
@@ -37,7 +37,7 @@ public class PortalHelper {
         }
 
         if (normalFrames.size() < 4) {
-            return false;
+            return;
         }
 
         int top = normalFrames.get(0).getX();
@@ -81,11 +81,11 @@ public class PortalHelper {
             BlockState state = world.getBlockState(blockPos);
 
             if (!(state.getBlock() instanceof AbstractEndPortal)) {
-                return false;
+                return;
             }
 
             if (!state.getValue(EYE)) {
-                return false;
+                return;
             }
 
             types.remove(((AbstractEndPortal) state.getBlock()).type);
@@ -96,10 +96,10 @@ public class PortalHelper {
             BlockState state = world.getBlockState(blockPos);
 
             if (blockPos.equals(pos)) continue;
-            if (!state.getValue(EYE)) return false;
+            if (!state.getValue(EYE)) return;
         }
 
-        if (!types.isEmpty()) return false;
+        if (!types.isEmpty()) return;
 
         ArrayList<BlockPos> portalPos = new ArrayList<>();
         portalPos.add(limitBlockArea.get(6));
@@ -124,7 +124,5 @@ public class PortalHelper {
                 1.0F,
                 1.0F
         );
-
-        return true;
     }
 }

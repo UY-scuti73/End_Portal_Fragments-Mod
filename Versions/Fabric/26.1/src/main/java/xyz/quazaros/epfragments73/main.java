@@ -8,6 +8,7 @@ import xyz.quazaros.epfragments73.item.ModItems;
 
 import static xyz.quazaros.epfragments73.item.util.LootTables.registerLootTables;
 import static xyz.quazaros.epfragments73.item.util.PortalListener.registerPortalListener;
+import static xyz.quazaros.epfragments73.strongholdGeneration.StrongholdPortalPatcher.initScheduler;
 import static xyz.quazaros.epfragments73.strongholdGeneration.StrongholdPortalPatcher.register;
 
 public class main implements ModInitializer {
@@ -27,6 +28,7 @@ public class main implements ModInitializer {
 
         //Set up listener for portal construction
         register();
+        initScheduler();
 
         LOGGER.info("EndPortalChallenge Initialized");
     }

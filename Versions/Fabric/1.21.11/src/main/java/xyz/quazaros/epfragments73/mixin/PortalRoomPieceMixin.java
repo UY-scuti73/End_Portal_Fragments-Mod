@@ -28,7 +28,6 @@ public abstract class PortalRoomPieceMixin extends StructurePiece {
     public PortalRoomPieceMixin(int length, BlockBox boundingBox) {
         super(null, length, boundingBox);
     }
-
     @Inject(
             method = "generate",
             at = @At("RETURN"),

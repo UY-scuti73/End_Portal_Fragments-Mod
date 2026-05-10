@@ -8,6 +8,8 @@ import net.minecraft.core.BlockPos;
 
 import xyz.quazaros.epfragments73.item.EndPortals.PortalHelper;
 
+import static xyz.quazaros.epfragments73.item.EndPortals.PortalHelper.tryPortal;
+
 public class PortalListener {
 
     public static void registerPortalListener() {
@@ -25,10 +27,10 @@ public class PortalListener {
                 return InteractionResult.PASS;
             }
 
-            boolean success = PortalHelper.tryPortal(world, pos);
+            tryPortal(world, pos);
 
             // optional: consume interaction if portal triggered
-            return success ? InteractionResult.SUCCESS : InteractionResult.PASS;
+            return InteractionResult.PASS;
         });
     }
 }

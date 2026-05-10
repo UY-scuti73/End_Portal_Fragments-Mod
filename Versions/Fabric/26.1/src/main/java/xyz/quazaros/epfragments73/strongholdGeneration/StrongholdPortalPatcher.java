@@ -2,13 +2,19 @@ package xyz.quazaros.epfragments73.strongholdGeneration;
 
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerChunkEvents;
 
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
+import net.minecraft.core.SectionPos;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.level.levelgen.structure.*;
 
 import net.minecraft.core.Direction;
@@ -16,73 +22,121 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceType;
 import xyz.quazaros.epfragments73.item.ModBlocks;
 
+import java.util.*;
+
 public class StrongholdPortalPatcher {
+
+    private static final int TICK_DELAY = 20;
+
+    private static final Map<BlockPos, BlockState> BLOCK_QUEUE = new HashMap<>();
+    private static final Set<BlockPos> PATCHED_PORTALS = new HashSet<>();
 
     public static void register() {
         ServerChunkEvents.CHUNK_LOAD.register((level, chunk, state) -> {
-            if (!(level instanceof ServerLevel server)) return;
-
-            var structureRegistry = server.registryAccess().lookupOrThrow(Registries.STRUCTURE);
-            Structure stronghold = structureRegistry.get(BuiltinStructures.STRONGHOLD)
-                    .map(holder -> holder.value())
-                    .orElse(null);
-
-            if (stronghold == null) return;
-
-            var start = server.structureManager().getStructureAt(chunk.getPos().getWorldPosition(), stronghold);
-
-            if (start.isValid() && isChunkThePortalChunk(start, chunk.getPos())) {
-                patchStronghold(server, start);
-            }
+            findStronghold(level, chunk);
+            loadPortalsInChunk(level, chunk);
         });
     }
 
-    private static boolean isChunkThePortalChunk(StructureStart start, ChunkPos pos) {
-        return start.getChunkPos().equals(pos);
-    }
+    private static void findStronghold(ServerLevel level, LevelChunk chunk) {
+        //If not a stronghold then return
+        if (!(level instanceof ServerLevel server)) return;
+        if (!server.dimension().equals(ServerLevel.OVERWORLD)) return;
+        var structureRegistry = server.registryAccess().lookupOrThrow(Registries.STRUCTURE);
+        Structure stronghold = structureRegistry.get(BuiltinStructures.STRONGHOLD)
+                .map(Holder.Reference::value)
+                .orElse(null);
+        if (stronghold == null) return;
 
-    private static void patchStronghold(ServerLevel world, StructureStart start) {
-        for (StructurePiece piece : start.getPieces()) {
-            if (piece.getType() == StructurePieceType.STRONGHOLD_PORTAL_ROOM) {
-                // This is the actual center of the room where the spawner usually is
-                BlockPos roomCenter = piece.getBoundingBox().getCenter();
+        SectionPos sectionPos = SectionPos.of(chunk.getPos(), 0);
+        var starts = server.structureManager().startsForStructure(sectionPos, stronghold);
+        for (StructureStart candidate : starts) {
+            if (!candidate.isValid()) continue;
+            for (StructurePiece piece : candidate.getPieces()) {
+                if (piece.getType() == StructurePieceType.STRONGHOLD_PORTAL_ROOM) {
+                    // Get the center of the portal room
+                    BlockPos portalCenter = piece.getBoundingBox().getCenter();
+                    ChunkPos portalChunk = new ChunkPos(portalCenter.getX() >> 4, portalCenter.getZ() >> 4);
 
-                // We pass the center and the piece's actual box to ensure isInside() works
-                generateCustomPortalFrames(world, roomCenter, piece.getBoundingBox());
-                return;
+                    if (!portalChunk.equals(chunk.getPos())) {continue;}
+
+                    if (!PATCHED_PORTALS.add(portalCenter)) {
+                        return;
+                    }
+
+                    BoundingBox box = piece.getBoundingBox();
+                    Direction facing = piece.getOrientation();
+
+                    generateCustomPortalFrames(server, box, facing);
+                    return;
+                }
             }
         }
     }
 
-    private static void generateCustomPortalFrames(ServerLevel world, BlockPos center, BoundingBox roomBox) {
+    private static void loadPortalsInChunk(ServerLevel level, LevelChunk chunk) {
+        ChunkPos loadedChunk = chunk.getPos();
+
+        List<BlockPos> toRemove = new ArrayList<>();
+        Map<BlockPos, BlockState> toLoad = new HashMap<>();
+
+        for (Map.Entry<BlockPos, BlockState> entry : BLOCK_QUEUE.entrySet()) {
+            BlockPos pos = entry.getKey();
+            ChunkPos posChunk = new ChunkPos(pos.getX()>>4, pos.getZ()>>4);
+            if (!posChunk.equals(loadedChunk)) {
+                continue;
+            }
+            toLoad.put(pos, entry.getValue());
+            toRemove.add(pos);
+        }
+
+        // Remove processed entries
+        for (BlockPos pos : toRemove) {
+            BLOCK_QUEUE.remove(pos);
+        }
+
+        // Add Blocks
+        schedule(level, TICK_DELAY, () -> {
+            for (Map.Entry<BlockPos, BlockState> entry : toLoad.entrySet()) {
+                loadBlock(entry.getKey(), entry.getValue(), level);
+            }
+        });
+    }
+
+    private static void loadBlock(BlockPos pos, BlockState state, ServerLevel level) {
+        level.setBlock(pos, state, 2 | 16);
+    }
+
+    private static void generateCustomPortalFrames(ServerLevel world, BoundingBox roomBox, Direction facing) {
+        BlockPos center = findEndPortalCenter(roomBox, facing);
+
+        ArrayList<Direction> directions = getDirection(facing);
+
         int cx = center.getX();
         int cy = center.getY();
         int cz = center.getZ();
 
-        // Use the actual Y of the room.
-        // Usually, the frame is 1 or 2 blocks below the 'center' point of the piece's box.
-        // Let's assume the frame floor is at cy - 1.
-        int frameY = cy - 1;
+        ArrayList<String> portals = getPortals(facing);
 
-        // NORTH (Face South)
-        placeCustomBlock(world, cx - 1, frameY, cz + 2, Direction.SOUTH, roomBox, "ancient");
-        placePortalFrame(world, cx, frameY, cz + 2, Direction.SOUTH, roomBox);
-        placeCustomBlock(world, cx + 1, frameY, cz + 2, Direction.SOUTH, roomBox, "dark");
+        // NORTH SIDE (facing SOUTH)
+        placeCustomBlock(world, cx-1, cy, cz+2, directions.get(0), roomBox, portals.get(0));
+        placePortalFrame(world, cx, cy, cz+2, directions.get(0), roomBox);
+        placeCustomBlock(world, cx+1, cy, cz+2, directions.get(0), roomBox, portals.get(1));
 
-        // SOUTH (Face North)
-        placeCustomBlock(world, cx - 1, frameY, cz - 2, Direction.NORTH, roomBox, "ruined");
-        placePortalFrame(world, cx, frameY, cz - 2, Direction.NORTH, roomBox);
-        placeCustomBlock(world, cx + 1, frameY, cz - 2, Direction.NORTH, roomBox, "sandy");
+        // SOUTH SIDE (facing NORTH)
+        placeCustomBlock(world, cx-1, cy, cz-2, directions.get(1), roomBox, portals.get(2));
+        placePortalFrame(world, cx, cy, cz-2, directions.get(1), roomBox);
+        placeCustomBlock(world, cx+1, cy, cz-2, directions.get(1), roomBox, portals.get(3));
 
-        // WEST (Face East)
-        placeCustomBlock(world, cx - 2, frameY, cz - 1, Direction.EAST, roomBox, "golden");
-        placePortalFrame(world, cx - 2, frameY, cz, Direction.EAST, roomBox);
-        placeCustomBlock(world, cx - 2, frameY, cz + 1, Direction.EAST, roomBox, "gusty");
+        // WEST SIDE (facing EAST)
+        placeCustomBlock(world, cx-2, cy, cz-1, directions.get(2), roomBox, portals.get(4));
+        placePortalFrame(world, cx-2, cy, cz, directions.get(2), roomBox);
+        placeCustomBlock(world, cx-2, cy, cz+1, directions.get(2), roomBox, portals.get(5));
 
-        // EAST (Face West)
-        placeCustomBlock(world, cx + 2, frameY, cz - 1, Direction.WEST, roomBox, "wealthy");
-        placePortalFrame(world, cx + 2, frameY, cz, Direction.WEST, roomBox);
-        placeCustomBlock(world, cx + 2, frameY, cz + 1, Direction.WEST, roomBox, "withered");
+        // EAST SIDE (facing WEST)
+        placeCustomBlock(world, cx+2, cy, cz-1, directions.get(3), roomBox, portals.get(6));
+        placePortalFrame(world, cx+2, cy, cz, directions.get(3), roomBox);
+        placeCustomBlock(world, cx+2, cy, cz+1, directions.get(3), roomBox, portals.get(7));
     }
 
     private static void placePortalFrame(ServerLevel world, int x, int y, int z,
@@ -93,26 +147,23 @@ public class StrongholdPortalPatcher {
         if (!box.isInside(pos)) return;
 
         BlockState state = Blocks.END_PORTAL_FRAME.defaultBlockState()
-                .setValue(net.minecraft.world.level.block.state.properties.BlockStateProperties.HORIZONTAL_FACING, facing)
-                .setValue(net.minecraft.world.level.block.state.properties.BlockStateProperties.EYE, false);
+                .setValue(BlockStateProperties.HORIZONTAL_FACING, facing)
+                .setValue(BlockStateProperties.EYE, false);
 
-        world.setBlock(pos, state, Block.UPDATE_ALL);
+        BLOCK_QUEUE.put(pos, state);
     }
 
     private static void placeCustomBlock(ServerLevel world, int x, int y, int z,
                                          Direction facing, BoundingBox box, String type) {
-
         BlockPos pos = new BlockPos(x, y, z);
 
-        if (!box.isInside(pos)) return;
-
         Block block = getEndPortal(type);
-        if (block == null) return;
+        if (block == null) {return;}
 
         BlockState state = block.defaultBlockState()
-                .setValue(net.minecraft.world.level.block.state.properties.BlockStateProperties.HORIZONTAL_FACING, facing);
+                .setValue(BlockStateProperties.HORIZONTAL_FACING, facing);
 
-        world.setBlock(pos, state, Block.UPDATE_ALL);
+        BLOCK_QUEUE.put(pos, state);
     }
 
     private static Block getEndPortal(String type) {
@@ -127,5 +178,133 @@ public class StrongholdPortalPatcher {
             case "sandy" -> ModBlocks.SANDY_ENDPORTAL_FRAME;
             default -> null;
         };
+    }
+
+    private static ArrayList<Direction> getDirection(Direction facing) {
+        ArrayList<Direction> directions = new ArrayList<>();
+        directions.add(Direction.NORTH);
+        directions.add(Direction.SOUTH);
+        directions.add(Direction.EAST);
+        directions.add(Direction.WEST);
+        return directions;
+    }
+
+    private static ArrayList<String> getPortals(Direction facing) {
+        ArrayList<String> portals = new ArrayList<>();
+        switch (facing) {
+            case SOUTH:
+                portals.add("ancient");
+                portals.add("dark");
+                portals.add("ruined");
+                portals.add("sandy");
+                portals.add("golden");
+                portals.add("gusty");
+                portals.add("wealthy");
+                portals.add("withered");
+                break;
+            case WEST:
+                portals.add("withered");
+                portals.add("wealthy");
+                portals.add("gusty");
+                portals.add("golden");
+                portals.add("ancient");
+                portals.add("dark");
+                portals.add("ruined");
+                portals.add("sandy");
+                break;
+            case NORTH:
+                portals.add("sandy");
+                portals.add("ruined");
+                portals.add("dark");
+                portals.add("ancient");
+                portals.add("withered");
+                portals.add("wealthy");
+                portals.add("gusty");
+                portals.add("golden");
+                break;
+            case EAST:
+                portals.add("golden");
+                portals.add("gusty");
+                portals.add("wealthy");
+                portals.add("withered");
+                portals.add("sandy");
+                portals.add("ruined");
+                portals.add("dark");
+                portals.add("ancient");
+                break;
+        }
+        return portals;
+    }
+
+    public static Optional<Direction> getRoomFacingFromPortalFrames(ServerLevel world, BoundingBox box, BlockPos structureCenter, BlockPos center) {
+        if (center == null) return Optional.empty();
+
+        Direction direction;
+
+        if (center.getX() == structureCenter.getX()) {
+            direction = center.getZ() > structureCenter.getZ() ? Direction.SOUTH : Direction.NORTH;
+        } else {
+            direction = center.getX() > structureCenter.getX() ? Direction.EAST : Direction.WEST;
+        }
+
+        return Optional.of(direction);
+    }
+
+    public static BlockPos findEndPortalCenter(BoundingBox box, Direction facing) {
+        if (facing == null) return null;
+
+        // The relative center of the portal room is always at these coordinates
+        int relX = 5;
+        int relY = 3;
+        int relZ = 10;
+
+        int worldX = box.minX();
+        int worldY = box.minY() + relY;
+        int worldZ = box.minZ();
+        switch (facing) {
+            case NORTH -> { worldX = box.minX() + relX; worldZ = box.maxZ() - relZ; }
+            case SOUTH -> { worldX = box.minX() + relX; worldZ = box.minZ() + relZ; }
+            case WEST  -> { worldX = box.maxX() - relZ; worldZ = box.minZ() + relX; }
+            case EAST  -> { worldX = box.minX() + relZ; worldZ = box.minZ() + relX; }
+        }
+
+        return new BlockPos(worldX, worldY, worldZ);
+    }
+
+    // SCHEDULER
+
+    // Simple scheduled task structure
+    private static class ScheduledTask {
+        int ticksRemaining;
+        Runnable action;
+    }
+
+    private static final List<ScheduledTask> TASKS = new ArrayList<>();
+
+    public static void initScheduler() {
+        ServerTickEvents.END_SERVER_TICK.register(StrongholdPortalPatcher::onEndServerTick);
+    }
+
+    private static void onEndServerTick(MinecraftServer server) {
+        if (TASKS.isEmpty()) return;
+        // Copy to avoid modification while iterating
+        List<ScheduledTask> tasksCopy = new ArrayList<>(TASKS);
+        TASKS.clear();
+        for (ScheduledTask task : tasksCopy) {
+            task.ticksRemaining--;
+            if (task.ticksRemaining <= 0) {
+                task.action.run();
+            } else {
+                // re-queue for next tick
+                TASKS.add(task);
+            }
+        }
+    }
+
+    private static void schedule(ServerLevel level, int delayTicks, Runnable action) {
+        ScheduledTask t = new ScheduledTask();
+        t.ticksRemaining = delayTicks;
+        t.action = action;
+        TASKS.add(t);
     }
 }

@@ -3,9 +3,7 @@
   "minVersion": "0.8",
   "package": "xyz.quazaros.epfragments73.mixin",
   "compatibilityLevel": "JAVA_21",
-  "mixins": [
-    "PortalRoomPieceMixin"
-  ],
+  "mixins": [],
   "injectors": {
     "defaultRequire": 1
   },
