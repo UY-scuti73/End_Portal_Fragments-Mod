@@ -3,7 +3,20 @@ plugins {
     id 'maven-publish'
 }
 
-version = project.mod_version
+// Load version from ../.. /version.properties directly
+def versionProps = new Properties()
+file("../../version.properties").withInputStream { versionProps.load(it) }
+def modVersion = versionProps["mod_version"]
+
+version = modVersion
+
+tasks.named("processResources") {
+    inputs.property "mod_version", modVersion
+    filesMatching("META-INF/neoforge.mods.toml") {
+        expand "mod_version": modVersion
+    }
+}
+
 group = project.maven_group
 
 base {

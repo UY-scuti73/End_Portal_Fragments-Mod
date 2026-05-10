@@ -4,10 +4,11 @@ license = "All Rights Reserved"
 
 [[mods]]
 modId = "epfragments73"
-version = "2.0.0"
+version = "${mod_version}"
 displayName = "Fragments Of The Final Gate"
+logoFile = "pack.png"
 description = '''
-        Adds multiple variants of End Portal Frames with unique eyes.
+Adds multiple variants of End Portal Frames with unique eyes.
     '''
 
 [[dependencies.epfragments73]]

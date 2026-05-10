@@ -4,15 +4,19 @@
     <facet type="minecraft" name="Minecraft">
       <configuration>
         <autoDetectTypes>
-          <platformType>MCP</platformType>
-          <platformType>MIXIN</platformType>
           <platformType>FORGE</platformType>
+          <platformType>MIXIN</platformType>
+          <platformType>MCP</platformType>
         </autoDetectTypes>
         <projectReimportVersion>1</projectReimportVersion>
       </configuration>
     </facet>
   </component>
   <component name="McpModuleSettings">
-    <option name="srgType" value="SRG" />
+    <option name="mappingFile" value="E:\IMPORTANT\Coding\Projects\Minecraft Mods\Mods\End_Portal_Challenge-Mod\Versions\Forge\1.21.8\build\createMcpToSrg\output.tsrg" />
+    <option name="mcpVersion" value="parchment_2025.06.29-1.21.6" />
+    <option name="minecraftVersion" value="1.21.8" />
+    <option name="platformVersion" value="58.1.0" />
+    <option name="srgType" value="TSRG" />
   </component>
 </module>

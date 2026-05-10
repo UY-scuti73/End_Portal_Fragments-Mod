@@ -5,8 +5,20 @@ plugins {
     id 'net.neoforged.moddev' version '2.0.141'
 }
 
-version = mod_version
+// Load version from ../.. /version.properties directly
+def versionProps = new Properties()
+file("../../version.properties").withInputStream { versionProps.load(it) }
+def modVersion = versionProps["mod_version"]
+
+version = modVersion
 group = mod_group_id
+
+tasks.named("processResources") {
+    inputs.property "mod_version", modVersion
+    filesMatching("META-INF/neoforge.mods.toml") {
+        expand "mod_version": modVersion
+    }
+}
 
 repositories {
     mavenLocal()
@@ -129,7 +141,7 @@ var generateModMetadata = tasks.register("generateModMetadata", ProcessResources
                              mod_id                 : mod_id,
                              mod_name               : mod_name,
                              mod_license            : mod_license,
-                             mod_version            : mod_version,
+                             mod_version            : modVersion,
                              mod_authors            : mod_authors,
                              mod_description        : mod_description]
     inputs.properties replaceProperties

@@ -80,6 +80,30 @@ public abstract class PortalRoomPieceMixin extends StructurePiece {
         placeCustomBlock(level, cx + 2, 3, cz + 1, directions.get(3), chunkBox, "withered");
     }
 
+    private ArrayList<String> getPortals(Direction facing) {
+        ArrayList<String> portals = new ArrayList<>();
+        if (facing == Direction.NORTH ||  facing == Direction.SOUTH) {
+            portals.add("ancient");
+            portals.add("dark");
+            portals.add("ruined");
+            portals.add("sandy");
+            portals.add("golden");
+            portals.add("gusty");
+            portals.add("wealthy");
+            portals.add("withered");
+        } else {
+            portals.add("dark");
+            portals.add("ancient");
+            portals.add("sandy");
+            portals.add("ruined");
+            portals.add("wealthy");
+            portals.add("withered");
+            portals.add("golden");
+            portals.add("gusty");
+        }
+        return portals;
+    }
+
     private void placePortalFrame(
             WorldGenLevel level,
             int x, int y, int z,

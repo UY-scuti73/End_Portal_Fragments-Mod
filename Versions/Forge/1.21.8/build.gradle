@@ -11,9 +11,20 @@ mixin {
     config "epfragments73.mixins.json"
 }
 
+// Load version from ../.. /version.properties directly
+def versionProps = new Properties()
+file("../../version.properties").withInputStream { versionProps.load(it) }
+def modVersion = versionProps["mod_version"]
 
+version = modVersion
 group = mod_group_id
-version = mod_version
+
+tasks.named("processResources") {
+    inputs.property "mod_version", modVersion
+    filesMatching("META-INF/neoforge.mods.toml") {
+        expand "mod_version": modVersion
+    }
+}
 
 base {
     archivesName = mod_id
@@ -161,7 +172,7 @@ tasks.named('processResources', ProcessResources).configure {
     var replaceProperties = [minecraft_version   : minecraft_version, minecraft_version_range: minecraft_version_range,
                              forge_version       : forge_version, forge_version_range: forge_version_range,
                              loader_version_range: loader_version_range,
-                             mod_id              : mod_id, mod_name: mod_name, mod_license: mod_license, mod_version: mod_version,
+                             mod_id              : mod_id, mod_name: mod_name, mod_license: mod_license, mod_version: modVersion,
                              mod_authors         : mod_authors, mod_description: mod_description,]
 
     inputs.properties replaceProperties
