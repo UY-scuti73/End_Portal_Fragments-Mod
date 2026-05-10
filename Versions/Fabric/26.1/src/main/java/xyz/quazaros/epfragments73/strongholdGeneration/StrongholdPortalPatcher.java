@@ -20,13 +20,14 @@ import net.minecraft.world.level.levelgen.structure.*;
 import net.minecraft.core.Direction;
 
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceType;
+import xyz.quazaros.epfragments73.config.ConfigManager;
 import xyz.quazaros.epfragments73.item.ModBlocks;
 
 import java.util.*;
 
 public class StrongholdPortalPatcher {
 
-    private static final int TICK_DELAY = 20;
+    private static final int TICK_DELAY = ConfigManager.getDelay().tick_delay;
 
     private static final Map<BlockPos, BlockState> BLOCK_QUEUE = new HashMap<>();
     private static final Set<BlockPos> PATCHED_PORTALS = new HashSet<>();
