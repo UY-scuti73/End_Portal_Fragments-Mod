@@ -1,3 +1,6 @@
+import org.gradle.jvm.toolchain.JavaLanguageVersion
+import org.gradle.language.jvm.tasks.ProcessResources
+
 plugins {
     id 'java-library'
     id 'maven-publish'
@@ -5,33 +8,55 @@ plugins {
     id 'net.neoforged.moddev' version '2.0.141'
 }
 
-// Load version from ../.. /version.properties directly
+// --- Load all properties from ../../version.properties ---
 def versionProps = new Properties()
 file("../../version.properties").withInputStream { versionProps.load(it) }
-def modVersion = versionProps["mod_version"]
 
-version = modVersion
-group = mod_group_id
+// Trim/normalize and bind them to local variables
+def modVersion     = versionProps["mod_version"]?.toString()?.trim()
+def modName        = versionProps["mod_name"]?.toString()?.trim()
+def modId          = versionProps["mod_id"]?.toString()?.trim()
+def modAuthors     = versionProps["mod_authors"]?.toString()?.trim()
+def modGroupId     = versionProps["mod_group_id"]?.toString()?.trim()
+def modDescription = versionProps["mod_description"]?.toString()?.trim()
+// version.properties uses "mod_licence" (British spelling).
+// We normalize to "mod_license" so the rest of the build can use that key.
+def modLicense     = versionProps["mod_licence"]?.toString()?.trim()
 
-tasks.named("processResources") {
-    inputs.property "mod_version", modVersion
-    filesMatching("META-INF/neoforge.mods.toml") {
-        expand "mod_version": modVersion
-    }
-}
+// Export them as project properties so project.mod_id etc. work
+ext.mod_version     = modVersion
+ext.mod_name        = modName
+ext.mod_id          = modId
+ext.mod_authors     = modAuthors
+ext.mod_group_id    = modGroupId
+ext.mod_description = modDescription
+ext.mod_license     = modLicense
+
+// --- Apply to project identity ---
+version = project.mod_version
+group = project.mod_group_id
 
 repositories {
     mavenLocal()
+    mavenCentral()
 }
 
 base {
-    archivesName = mod_id
+    archivesName = project.mod_id
 }
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+// --- Java toolchain (NeoForge 1.21.1 wants Java 21) ---
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
 
+// --- NeoForge configuration ---
 neoForge {
-    // Specify the version of NeoForge to use.
+    // These three (neo_version, parchment_mappings_version, parchment_minecraft_version)
+    // are typically defined in gradle.properties or another properties file.
+    // If you want them also in version.properties, you can load them above the same way.
     version = project.neo_version
 
     parchment {
@@ -39,127 +64,99 @@ neoForge {
         minecraftVersion = project.parchment_minecraft_version
     }
 
-    // This line is optional. Access Transformers are automatically detected
-    // accessTransformers.add('src/main/resources/META-INF/accesstransformer.cfg')
-
-    // Default run configurations.
-    // These can be tweaked, removed, or duplicated as needed.
     runs {
         client {
             client()
-
-            // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
             systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
         }
-
         server {
             server()
             programArgument '--nogui'
             systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
         }
-
-        // This run config launches GameTestServer and runs all registered gametests, then exits.
-        // By default, the server will crash when no gametests are provided.
-        // The gametest system is also enabled by default for other run configs under the /test command.
         gameTestServer {
             type = "gameTestServer"
             systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
         }
-
         data {
             data()
-
-            // example of overriding the workingDirectory set in configureEach above, uncomment if you want to use it
-            // gameDirectory = project.file('run-data')
-
-            // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
-            programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
+            programArguments.addAll(
+                    '--mod', project.mod_id,
+                    '--all',
+                    '--output',   file('src/generated/resources/').absolutePath,
+                    '--existing', file('src/main/resources/').absolutePath
+            )
         }
-
-        // applies to all the run configs above
         configureEach {
-            // Recommended logging data for a userdev environment
-            // The markers can be added/remove as needed separated by commas.
-            // "SCAN": For mods scan.
-            // "REGISTRIES": For firing of registry events.
-            // "REGISTRYDUMP": For getting the contents of all registries.
             systemProperty 'forge.logging.markers', 'REGISTRIES'
-
-            // Recommended logging level for the console
-            // You can set various levels here.
-            // Please read: https://stackoverflow.com/questions/2031163/when-to-use-the-different-log-levels
             logLevel = org.slf4j.event.Level.DEBUG
         }
     }
 
     mods {
-        // define mod <-> source bindings
-        // these are used to tell the game which sources are for which mod
-        // mostly optional in a single mod project
-        // but multi mod projects should define one per mod
-        "${mod_id}" {
+        "${project.mod_id}" {
             sourceSet(sourceSets.main)
         }
     }
 }
 
 // Include resources generated by data generators.
-sourceSets.main.resources { srcDir 'src/generated/resources' }
-
-
-dependencies {
-    // Example mod dependency with JEI
-    // The JEI API is declared for compile time use, while the full JEI artifact is used at runtime
-    // compileOnly "mezz.jei:jei-${mc_version}-common-api:${jei_version}"
-    // compileOnly "mezz.jei:jei-${mc_version}-forge-api:${jei_version}"
-    // runtimeOnly "mezz.jei:jei-${mc_version}-forge:${jei_version}"
-
-    // Example mod dependency using a mod jar from ./libs with a flat dir repository
-    // This maps to ./libs/coolmod-${mc_version}-${coolmod_version}.jar
-    // The group id is ignored when searching -- in this case, it is "blank"
-    // implementation "blank:coolmod-${mc_version}:${coolmod_version}"
-
-    // Example mod dependency using a file as dependency
-    // implementation files("libs/coolmod-${mc_version}-${coolmod_version}.jar")
-
-    // Example project dependency using a sister or child project:
-    // implementation project(":myproject")
-
-    // For more info:
-    // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
-    // http://www.gradle.org/docs/current/userguide/dependency_management.html
+sourceSets.main.resources {
+    srcDir 'src/generated/resources'
 }
 
-// This block of code expands all declared replace properties in the specified resource targets.
-// A missing property will result in an error. Properties are expanded using ${} Groovy notation.
-var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
-    var replaceProperties = [minecraft_version      : minecraft_version,
-                             minecraft_version_range: minecraft_version_range,
-                             neo_version            : neo_version,
-                             neo_version_range      : neo_version_range,
-                             loader_version_range   : loader_version_range,
-                             mod_id                 : mod_id,
-                             mod_name               : mod_name,
-                             mod_license            : mod_license,
-                             mod_version            : modVersion,
-                             mod_authors            : mod_authors,
-                             mod_description        : mod_description]
+// --- Dependencies (fill in as needed) ---
+dependencies {
+    // Example:
+    // implementation "net.neoforged:neoforge:${neo_version}"
+}
+
+// --- Mod metadata generation (using values from version.properties) ---
+// This task generates metadata files from templates in src/main/templates
+def generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
+    // These come from other properties (gradle.properties or elsewhere)
+    // minecraft_version, minecraft_version_range, neo_version, neo_version_range, loader_version_range
+    // are NOT in version.properties in your example, so they must be defined already.
+    def replaceProperties = [
+            minecraft_version      : minecraft_version,
+            minecraft_version_range: minecraft_version_range,
+            neo_version            : neo_version,
+            neo_version_range      : neo_version_range,
+            loader_version_range   : loader_version_range,
+
+            // From version.properties (via project properties we exported)
+            mod_id                 : project.mod_id,
+            mod_name               : project.mod_name,
+            mod_license            : project.mod_license,
+            mod_version            : project.mod_version,
+            mod_authors            : project.mod_authors,
+            mod_description        : project.mod_description,
+    ]
+
     inputs.properties replaceProperties
     expand replaceProperties
     from "src/main/templates"
     into "build/generated/sources/modMetadata"
 }
 
-// Include the output of "generateModMetadata" as an input directory for the build
-// this works with both building through Gradle and the IDE.
+// Include the output of "generateModMetadata" as a resource input
 sourceSets.main.resources.srcDir generateModMetadata
-// To avoid having to run "generateModMetadata" manually, make it run on every project reload
+
+// Run metadata generation on IDE sync as well
 neoForge.ideSyncTask generateModMetadata
 
-// Example configuration to allow publishing using the maven-publish plugin
+// --- Optional: extra processResources block for META-INF/neoforge.mods.toml ---
+tasks.named("processResources") {
+    inputs.property "mod_version", project.mod_version
+    filesMatching("META-INF/neoforge.mods.toml") {
+        expand "mod_version": project.mod_version
+    }
+}
+
+// --- Publishing ---
 publishing {
     publications {
-        register('mavenJava', MavenPublication) {
+        register('mavenJava', org.gradle.api.publish.maven.MavenPublication) {
             from components.java
         }
     }
@@ -170,7 +167,7 @@ publishing {
     }
 }
 
-// IDEA no longer automatically downloads sources/javadoc jars for dependencies, so we need to explicitly enable the behavior.
+// IDEA configuration
 idea {
     module {
         downloadSources = true
