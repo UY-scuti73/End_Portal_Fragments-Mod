@@ -6,7 +6,9 @@ on:
 
 jobs:
   upload-assets:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
