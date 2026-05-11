@@ -1,14 +1,13 @@
 {
   "schemaVersion": 1,
-  "id": "epfragments73",
+  "id": "${mod_id}",
   "version": "${version}",
-  "name": "Fragments Of The Final Gate",
-  "description": "Collect different eyes throughout the world to unlock the end",
-  "authors": ["Bowser_The_Boss"],
+  "name": "${mod_name}",
+  "description": "${mod_description}",
+  "authors": [ "${mod_authors}" ],
   "contact": {},
-  "license": "All-Rights-Reserved",
-  "icon": "assets/epfragments73/pack.png",
-  "environment": "*",
+  "license": "${mod_license}",
+  "icon": "pack.png",
   "entrypoints": {
     "fabric-datagen": [
       "xyz.quazaros.epfragments73.client.epfragments73DataGenerator"
@@ -20,6 +19,13 @@
       "xyz.quazaros.epfragments73.main"
     ]
   },
+  "mixins": [
+    "epfragments73.mixins.json",
+    {
+      "config": "epfragments73.client.mixins.json",
+      "environment": "client"
+    }
+  ],
   "depends": {
     "fabricloader": ">=${loader_version}",
     "fabric-api": "*",
