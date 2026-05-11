@@ -64,31 +64,57 @@ public abstract class PortalRoomPieceMixin extends StructurePiece {
         int cx = 5;
         int cz = 10;
 
-        // Using this.getOrientation() directly from the parent class
-        Direction currentOrientation = this.getOrientation();
-        ArrayList<Direction> directions = epf$getDirection(currentOrientation != null
-                ? currentOrientation
-                : Direction.NORTH);
+        Direction facing = this.getOrientation() != null
+                ? this.getOrientation()
+                : Direction.NORTH;
+
+        ArrayList<Direction> directions = epf$getDirection(facing);
+        ArrayList<String> portals = epf$getPortals(facing);
 
         // NORTH SIDE (facing SOUTH)
-        epf$placeCustomBlock(level, cx - 1, 3, cz + 2, directions.get(0), chunkBox, "ancient");
+        epf$placeCustomBlock(level, cx - 1, 3, cz + 2, directions.get(0), chunkBox, portals.get(0));
         epf$placePortalFrame(level, cx,     3, cz + 2, directions.get(0), chunkBox);
-        epf$placeCustomBlock(level, cx + 1, 3, cz + 2, directions.get(0), chunkBox, "dark");
+        epf$placeCustomBlock(level, cx + 1, 3, cz + 2, directions.get(0), chunkBox, portals.get(1));
 
         // SOUTH SIDE (facing NORTH)
-        epf$placeCustomBlock(level, cx - 1, 3, cz - 2, directions.get(1), chunkBox, "ruined");
+        epf$placeCustomBlock(level, cx - 1, 3, cz - 2, directions.get(1), chunkBox, portals.get(2));
         epf$placePortalFrame(level, cx,     3, cz - 2, directions.get(1), chunkBox);
-        epf$placeCustomBlock(level, cx + 1, 3, cz - 2, directions.get(1), chunkBox, "sandy");
+        epf$placeCustomBlock(level, cx + 1, 3, cz - 2, directions.get(1), chunkBox, portals.get(3));
 
         // WEST SIDE (facing EAST)
-        epf$placeCustomBlock(level, cx - 2, 3, cz - 1, directions.get(2), chunkBox, "golden");
+        epf$placeCustomBlock(level, cx - 2, 3, cz - 1, directions.get(2), chunkBox, portals.get(4));
         epf$placePortalFrame(level, cx - 2, 3, cz,     directions.get(2), chunkBox);
-        epf$placeCustomBlock(level, cx - 2, 3, cz + 1, directions.get(2), chunkBox, "gusty");
+        epf$placeCustomBlock(level, cx - 2, 3, cz + 1, directions.get(2), chunkBox, portals.get(5));
 
         // EAST SIDE (facing WEST)
-        epf$placeCustomBlock(level, cx + 2, 3, cz - 1, directions.get(3), chunkBox, "wealthy");
+        epf$placeCustomBlock(level, cx + 2, 3, cz - 1, directions.get(3), chunkBox, portals.get(6));
         epf$placePortalFrame(level, cx + 2, 3, cz,     directions.get(3), chunkBox);
-        epf$placeCustomBlock(level, cx + 2, 3, cz + 1, directions.get(3), chunkBox, "withered");
+        epf$placeCustomBlock(level, cx + 2, 3, cz + 1, directions.get(3), chunkBox, portals.get(7));
+    }
+
+    @Unique
+    private ArrayList<String> epf$getPortals(Direction facing) {
+        ArrayList<String> portals = new ArrayList<>();
+        if (facing == Direction.WEST ||  facing == Direction.SOUTH) {
+            portals.add("ancient");
+            portals.add("dark");
+            portals.add("ruined");
+            portals.add("sandy");
+            portals.add("golden");
+            portals.add("gusty");
+            portals.add("wealthy");
+            portals.add("withered");
+        } else {
+            portals.add("dark");
+            portals.add("ancient");
+            portals.add("sandy");
+            portals.add("ruined");
+            portals.add("wealthy");
+            portals.add("withered");
+            portals.add("golden");
+            portals.add("gusty");
+        }
+        return portals;
     }
 
     @Unique

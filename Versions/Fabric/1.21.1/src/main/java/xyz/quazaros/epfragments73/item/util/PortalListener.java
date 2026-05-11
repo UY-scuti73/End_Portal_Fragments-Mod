@@ -3,6 +3,7 @@ package xyz.quazaros.epfragments73.item.util;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.item.Items;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.BlockPos;
 
@@ -16,6 +17,9 @@ public class PortalListener {
             BlockState state = world.getBlockState(pos);
 
             if (!state.isOf(Blocks.END_PORTAL_FRAME)) {
+                return ActionResult.PASS;
+            }
+            if (!player.getInventory().getMainHandStack().isOf(Items.ENDER_EYE)) {
                 return ActionResult.PASS;
             }
 

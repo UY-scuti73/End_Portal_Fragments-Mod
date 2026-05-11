@@ -105,6 +105,7 @@ public class StrongholdPortalPatcher {
     }
 
     private static void loadBlock(BlockPos pos, BlockState state, ServerLevel level) {
+        if (!level.getBlockState(pos).is(Blocks.END_PORTAL_FRAME)) {return;}
         level.setBlock(pos, state, 2 | 16);
     }
 

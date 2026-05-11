@@ -52,33 +52,57 @@ public abstract class PortalRoomPieceMixin extends StructurePiece {
             StructureWorldAccess world,
             BlockBox chunkBox
     ) {
-        // Use relative coordinates like vanilla does
-        // Vanilla portal is at relative position (4, 3, 8) in an 11x8x11 room
         int cx = 5;
         int cz = 10;
 
-        ArrayList<Direction> directions = getDirection(this.getFacing());
+        Direction facing = this.getFacing() != null ? this.getFacing() : Direction.NORTH;
 
+        ArrayList<Direction> directions = getDirection(facing);
+        ArrayList<String> portals = getPortals(facing);
 
         // NORTH SIDE (Z = 8, facing SOUTH)
-        placeCustomBlock(world, cx-1, 3, cz+2, directions.get(0), chunkBox, "ancient");
+        placeCustomBlock(world, cx-1, 3, cz+2, directions.get(0), chunkBox, portals.get(0));
         placePortalFrame(world, cx, 3, cz+2, directions.get(0), chunkBox);
-        placeCustomBlock(world, cx+1, 3, cz+2, directions.get(0), chunkBox, "dark");
+        placeCustomBlock(world, cx+1, 3, cz+2, directions.get(0), chunkBox, portals.get(1));
 
         // SOUTH SIDE (Z = 10, facing NORTH)
-        placeCustomBlock(world, cx-1, 3, cz-2, directions.get(1), chunkBox, "ruined");
+        placeCustomBlock(world, cx-1, 3, cz-2, directions.get(1), chunkBox, portals.get(2));
         placePortalFrame(world, cx, 3, cz-2, directions.get(1), chunkBox);
-        placeCustomBlock(world, cx+1, 3, cz-2, directions.get(1), chunkBox, "sandy");
+        placeCustomBlock(world, cx+1, 3, cz-2, directions.get(1), chunkBox, portals.get(3));
 
         // WEST SIDE (X = 3, facing EAST)
-        placeCustomBlock(world, cx-2, 3, cz-1, directions.get(2), chunkBox, "golden");
+        placeCustomBlock(world, cx-2, 3, cz-1, directions.get(2), chunkBox, portals.get(4));
         placePortalFrame(world, cx-2, 3, cz, directions.get(2), chunkBox);
-        placeCustomBlock(world, cx-2, 3, cz+1, directions.get(2), chunkBox, "gusty");
+        placeCustomBlock(world, cx-2, 3, cz+1, directions.get(2), chunkBox, portals.get(5));
 
         // EAST SIDE (X = 5, facing WEST)
-        placeCustomBlock(world, cx+2, 3, cz-1, directions.get(3), chunkBox, "wealthy");
+        placeCustomBlock(world, cx+2, 3, cz-1, directions.get(3), chunkBox, portals.get(6));
         placePortalFrame(world, cx+2, 3, cz, directions.get(3), chunkBox);
-        placeCustomBlock(world, cx+2, 3, cz+1, directions.get(3), chunkBox, "withered");
+        placeCustomBlock(world, cx+2, 3, cz+1, directions.get(3), chunkBox, portals.get(7));
+    }
+
+    private ArrayList<String> getPortals(Direction facing) {
+        ArrayList<String> portals = new ArrayList<>();
+        if (facing == Direction.WEST ||  facing == Direction.SOUTH) {
+            portals.add("ancient");
+            portals.add("dark");
+            portals.add("ruined");
+            portals.add("sandy");
+            portals.add("golden");
+            portals.add("gusty");
+            portals.add("wealthy");
+            portals.add("withered");
+        } else {
+            portals.add("dark");
+            portals.add("ancient");
+            portals.add("sandy");
+            portals.add("ruined");
+            portals.add("wealthy");
+            portals.add("withered");
+            portals.add("golden");
+            portals.add("gusty");
+        }
+        return portals;
     }
 
     private void placePortalFrame(

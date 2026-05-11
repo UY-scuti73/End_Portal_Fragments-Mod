@@ -75,7 +75,6 @@ public class AbstractEndPortal extends Block {
         ItemStack stack = player.getMainHandStack();
         if (!state.get(EYE) && stack.isOf(getItem())) {
             if (!world.isClient()) {
-
                 world.setBlockState(pos, state.with(EYE, true), Block.NOTIFY_ALL);
                 if (!player.getAbilities().creativeMode) {
                     stack.decrement(1);

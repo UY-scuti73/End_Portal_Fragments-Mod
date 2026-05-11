@@ -8,6 +8,7 @@ plugins {
     id 'idea'
     id 'net.minecraftforge.gradle' version '[6.0.16,6.2)'
     id 'org.parchmentmc.librarian.forgegradle' version '1.2.0'
+    id 'org.spongepowered.mixin' version '0.7.+'
 }
 
 // --- Load all properties from ../../version.properties ---
@@ -104,6 +105,9 @@ dependencies {
     implementation('net.sf.jopt-simple:jopt-simple:5.0.4') {
         version { strictly '5.0.4' }
     }
+
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+
 }
 
 // Expand properties in mods.toml and pack.mcmeta
@@ -147,6 +151,7 @@ tasks.named('jar', Jar).configure {
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
+    options.compilerArgs += ["-AmixinRefmapFile=epfragments73.refmap.json"]
 }
 
 // Merge resources and classes into a single dir (FG hack)
@@ -154,4 +159,9 @@ sourceSets.each {
     def dir = layout.buildDirectory.dir("sourcesSets/$it.name")
     it.output.resourcesDir = dir
     it.java.destinationDirectory = dir
+}
+
+mixin {
+    add sourceSets.main, "epfragments73.refmap.json"
+    config "epfragments73.mixins.json"
 }

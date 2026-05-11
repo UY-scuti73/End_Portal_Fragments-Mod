@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Gradle Imported" enabled="true">
+        <outputRelativeToContentRoot value="true" />
+        <option name="mixinRefmapFile" value="epfragments73.refmap.json" />
+        <processorPath useClasspath="false">
+          <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.spongepowered/mixin/0.8.5/6d1c8bf4c28e697f472a83bd6add76ec4951734/mixin-0.8.5-processor.jar" />
+        </processorPath>
+        <module name="Forge-1.21.10.main" />
+      </profile>
+    </annotationProcessing>
+  </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="Fabric-1.21.1" options="&quot;-AoutRefMapFile=E:\IMPORTANT\Coding\Projects\Minecraft Mods\Mods\End_Portal_Challenge-Mod\Versions\Fabric\1.21.1\build\classes\java\client\client-epfragments73-refmap.json&quot; -AdefaultObfuscationEnv=named:intermediary -Aquiet=true &quot;-AoutMapFileNamedIntermediary=E:\IMPORTANT\Coding\Projects\Minecraft Mods\Mods\End_Portal_Challenge-Mod\Versions\Fabric\1.21.1\build\loom-cache\mixin-map-net.fabricmc.yarn.1_21_1.1.21.1+build.3-v2.client.tiny&quot; -AinMapFileNamedIntermediary=C:\Users\jakeb\.gradle\caches\fabric-loom\1.21.1\net.fabricmc.yarn.1_21_1.1.21.1+build.3-v2\mappings.tiny" />
@@ -22,6 +34,24 @@
       <module name="Fabric-1.21.8.client" options="&quot;-AoutRefMapFile=E:\IMPORTANT\Coding\Projects\Minecraft Mods\Mods\End_Portal_Challenge-Mod\Versions\Fabric\1.21.8\build\classes\java\client\client-epfragments73-refmap.json&quot; -AdefaultObfuscationEnv=named:intermediary -Aquiet=true &quot;-AoutMapFileNamedIntermediary=E:\IMPORTANT\Coding\Projects\Minecraft Mods\Mods\End_Portal_Challenge-Mod\Versions\Fabric\1.21.8\build\loom-cache\mixin-map-net.fabricmc.yarn.1_21_8.1.21.8+build.1-v2.client.tiny&quot; -AinMapFileNamedIntermediary=C:\Users\jakeb\.gradle\caches\fabric-loom\1.21.8\net.fabricmc.yarn.1_21_8.1.21.8+build.1-v2\mappings.tiny" />
       <module name="Fabric-1.21.8.main" options="&quot;-AoutRefMapFile=E:\IMPORTANT\Coding\Projects\Minecraft Mods\Mods\End_Portal_Challenge-Mod\Versions\Fabric\1.21.8\build\classes\java\main\epfragments73-refmap.json&quot; -AdefaultObfuscationEnv=named:intermediary -Aquiet=true &quot;-AoutMapFileNamedIntermediary=E:\IMPORTANT\Coding\Projects\Minecraft Mods\Mods\End_Portal_Challenge-Mod\Versions\Fabric\1.21.8\build\loom-cache\mixin-map-net.fabricmc.yarn.1_21_8.1.21.8+build.1-v2.main.tiny&quot; -AinMapFileNamedIntermediary=C:\Users\jakeb\.gradle\caches\fabric-loom\1.21.8\net.fabricmc.yarn.1_21_8.1.21.8+build.1-v2\mappings.tiny" />
       <module name="Fabric-1.21.8.test" options="&quot;-AoutRefMapFile=E:\IMPORTANT\Coding\Projects\Minecraft Mods\Mods\End_Portal_Challenge-Mod\Versions\Fabric\1.21.8\build\classes\java\test\test-epfragments73-refmap.json&quot; -AdefaultObfuscationEnv=named:intermediary -Aquiet=true &quot;-AoutMapFileNamedIntermediary=E:\IMPORTANT\Coding\Projects\Minecraft Mods\Mods\End_Portal_Challenge-Mod\Versions\Fabric\1.21.8\build\loom-cache\mixin-map-net.fabricmc.yarn.1_21_8.1.21.8+build.1-v2.test.tiny&quot; -AinMapFileNamedIntermediary=C:\Users\jakeb\.gradle\caches\fabric-loom\1.21.8\net.fabricmc.yarn.1_21_8.1.21.8+build.1-v2\mappings.tiny" />
+      <module name="Forge-1.21.1" options="-AmixinRefmapFile=epfragments73.refmap.json" />
+      <module name="Forge-1.21.1.main" options="-AmixinRefmapFile=epfragments73.refmap.json" />
+      <module name="Forge-1.21.1.test" options="-AmixinRefmapFile=epfragments73.refmap.json" />
+      <module name="Forge-1.21.10" options="-AmixinRefmapFile=epfragments73.refmap.json" />
+      <module name="Forge-1.21.10.main" options="-AmixinRefmapFile=epfragments73.refmap.json" />
+      <module name="Forge-1.21.10.test" options="-AmixinRefmapFile=epfragments73.refmap.json" />
+      <module name="Forge-1.21.11" options="-AmixinRefmapFile=epfragments73.refmap.json" />
+      <module name="Forge-1.21.11.main" options="-AmixinRefmapFile=epfragments73.refmap.json" />
+      <module name="Forge-1.21.11.test" options="-AmixinRefmapFile=epfragments73.refmap.json" />
+      <module name="Forge-1.21.3" options="-AmixinRefmapFile=epfragments73.refmap.json" />
+      <module name="Forge-1.21.3.main" options="-AmixinRefmapFile=epfragments73.refmap.json" />
+      <module name="Forge-1.21.3.test" options="-AmixinRefmapFile=epfragments73.refmap.json" />
+      <module name="Forge-1.21.5" options="-AmixinRefmapFile=epfragments73.refmap.json" />
+      <module name="Forge-1.21.5.main" options="-AmixinRefmapFile=epfragments73.refmap.json" />
+      <module name="Forge-1.21.5.test" options="-AmixinRefmapFile=epfragments73.refmap.json" />
+      <module name="Forge-1.21.8" options="-AmixinRefmapFile=epfragments73.refmap.json" />
+      <module name="Forge-1.21.8.main" options="-AmixinRefmapFile=epfragments73.refmap.json" />
+      <module name="Forge-1.21.8.test" options="-AmixinRefmapFile=epfragments73.refmap.json" />
     </option>
   </component>
 </project>
