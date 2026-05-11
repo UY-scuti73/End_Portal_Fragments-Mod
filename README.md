@@ -13,7 +13,7 @@ Filled:
 
 # Eyes
 
-There are 8 eyes that correspond to their portals found throughout the world. The loot table probability is lenient enough that at least one should spawn per structure. However, with bad luck it could be two or three. 
+There are 8 eyes that correspond to their portals found throughout the world. The loot table probability is lenient enough that at least one should spawn per structure. However, with bad luck it could be two or three. These paramaters can be changed with a config file.
 
 Ruined Eye - Elder Guardian Kill
 
@@ -32,6 +32,18 @@ Wealthy Eye - Woodland Mansion
 Sandy Eye - Desert Temple
 
 ![Eyes](https://cdn.modrinth.com/data/cached_images/6a3b8b4dd3ea1bb60f4b034c0994b2257d53e0be_0.webp)
+
+# Config
+
+You can modify the config file for drop/loot chances. The values go from 0-1 
+(0 being they don't spawn and 1 being the most). For most structures 1 means that they will always 
+spawn in that chest or from that drop. However 1 just makes it very common for the trial chambers ominous vault, 
+trail ruins, and piglin bartering. This is so you can still obtain other items from these loot tables.
+
+For Fabric 26.1+ there is a second config file to modify the delay for replacing the end portals with 
+the custom ones. If it is too small the server can try to replace them before the chunk loads fully, but too 
+long and it might be noticable. The default is 40 ticks (2 seconds) and should be fine for all intensive purposes, 
+however if a server is REALLY laggy it may need to be incremented.
 
 # Discord
 https://discord.gg/zHzFgWX8KW
