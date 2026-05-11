@@ -13,7 +13,9 @@ Filled:
 
 # Eyes
 
-There are 8 eyes that correspond to their portals found throughout the world. The loot table probability is lenient enough that at least one should spawn per structure. However, with bad luck it could be two or three. These paramaters can be changed with a config file.
+There are 8 eyes that correspond to their portals found throughout the world. 
+The loot table probability is lenient enough t one should spawn per structure. 
+However, with bad luck it could be two or three. These parameters can be changed with a config file.
 
 Ruined Eye - Elder Guardian Kill
 
