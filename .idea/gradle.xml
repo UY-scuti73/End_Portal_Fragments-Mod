@@ -225,7 +225,7 @@
       </GradleProjectSettings>
       <GradleProjectSettings>
         <option name="externalProjectPath" value="$PROJECT_DIR$/Versions/Neo-Forge/26.1" />
-        <option name="gradleJvm" value="temurin-25" />
+        <option name="gradleJvm" value="22" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$/Versions/Neo-Forge/26.1" />
