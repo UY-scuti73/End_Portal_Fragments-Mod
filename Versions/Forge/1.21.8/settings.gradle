@@ -20,4 +20,6 @@ plugins {
     id 'org.gradle.toolchains.foojay-resolver-convention' version '0.7.0'
 }
 
-rootProject.name = 'Forge-1.21.8'
+Properties props = new Properties()
+file("gradle.properties").withInputStream { props.load(it) }
+rootProject.name = props.getProperty("gradle_project_name")

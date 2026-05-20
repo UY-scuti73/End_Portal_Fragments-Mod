@@ -1,5 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel>
+      <module name="Forge-1.21.10" target="21" />
+      <module name="Forge-1.21.10.main" target="21" />
+      <module name="Forge-1.21.10.test" target="21" />
+      <module name="Forge-1.21.11" target="21" />
+      <module name="Forge-1.21.11.main" target="21" />
+      <module name="Forge-1.21.11.test" target="21" />
+      <module name="Forge-1.21.3" target="21" />
+      <module name="Forge-1.21.3.main" target="21" />
+      <module name="Forge-1.21.3.test" target="21" />
+      <module name="Forge-1.21.5" target="21" />
+      <module name="Forge-1.21.5.main" target="21" />
+      <module name="Forge-1.21.5.test" target="21" />
+      <module name="Forge-1.21.8" target="21" />
+      <module name="Forge-1.21.8.main" target="21" />
+      <module name="Forge-1.21.8.test" target="21" />
+      <module name="NeoForge-1.21.1" target="21" />
+      <module name="NeoForge-1.21.1.main" target="21" />
+      <module name="NeoForge-1.21.1.test" target="21" />
+      <module name="NeoForge-1.21.10" target="21" />
+      <module name="NeoForge-1.21.10.main" target="21" />
+      <module name="NeoForge-1.21.10.test" target="21" />
+      <module name="NeoForge-1.21.11" target="21" />
+      <module name="NeoForge-1.21.11.main" target="21" />
+      <module name="NeoForge-1.21.11.test" target="21" />
+      <module name="NeoForge-1.21.3" target="21" />
+      <module name="NeoForge-1.21.3.main" target="21" />
+      <module name="NeoForge-1.21.3.test" target="21" />
+      <module name="NeoForge-1.21.4" target="21" />
+      <module name="NeoForge-1.21.4.main" target="21" />
+      <module name="NeoForge-1.21.4.test" target="21" />
+      <module name="NeoForge-1.21.5" target="21" />
+      <module name="NeoForge-1.21.5.main" target="21" />
+      <module name="NeoForge-1.21.5.test" target="21" />
+      <module name="NeoForge-1.21.8" target="21" />
+      <module name="NeoForge-1.21.8.main" target="21" />
+      <module name="NeoForge-1.21.8.test" target="21" />
+      <module name="NeoForge-26.1" target="25" />
+      <module name="NeoForge-26.1.main" target="25" />
+      <module name="NeoForge-26.1.test" target="25" />
+      <module name="NeoForge.26.1" target="25" />
+      <module name="NeoForge.26.1.main" target="25" />
+      <module name="NeoForge.26.1.test" target="25" />
+      <module name="Winord" target="21" />
+      <module name="Winord.client" target="21" />
+      <module name="Winord.main" target="21" />
+      <module name="Winord.test" target="21" />
+      <module name="xyz.quazaros.Fabric-26.1" target="25" />
+      <module name="xyz.quazaros.Fabric-26.1.client" target="25" />
+      <module name="xyz.quazaros.Fabric-26.1.main" target="25" />
+      <module name="xyz.quazaros.Fabric-26.1.test" target="25" />
+    </bytecodeTargetLevel>
+  </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="Fabric-1.21.1" options="&quot;-AoutRefMapFile=E:\IMPORTANT\Coding\Projects\Minecraft Mods\Mods\End_Portal_Challenge-Mod\Versions\Fabric\1.21.1\build\classes\java\client\client-epfragments73-refmap.json&quot; -AdefaultObfuscationEnv=named:intermediary -Aquiet=true &quot;-AoutMapFileNamedIntermediary=E:\IMPORTANT\Coding\Projects\Minecraft Mods\Mods\End_Portal_Challenge-Mod\Versions\Fabric\1.21.1\build\loom-cache\mixin-map-net.fabricmc.yarn.1_21_1.1.21.1+build.3-v2.client.tiny&quot; -AinMapFileNamedIntermediary=C:\Users\jakeb\.gradle\caches\fabric-loom\1.21.1\net.fabricmc.yarn.1_21_1.1.21.1+build.3-v2\mappings.tiny" />
@@ -40,6 +94,21 @@
       <module name="Forge-1.21.8" options="-AmixinRefmapFile=epfragments73.refmap.json" />
       <module name="Forge-1.21.8.main" options="-AmixinRefmapFile=epfragments73.refmap.json" />
       <module name="Forge-1.21.8.test" options="-AmixinRefmapFile=epfragments73.refmap.json" />
+      <module name="Forge.1.21.10" options="-AmixinRefmapFile=epfragments73.refmap.json" />
+      <module name="Forge.1.21.10.main" options="-AmixinRefmapFile=epfragments73.refmap.json" />
+      <module name="Forge.1.21.10.test" options="-AmixinRefmapFile=epfragments73.refmap.json" />
+      <module name="Forge.1.21.11" options="-AmixinRefmapFile=epfragments73.refmap.json" />
+      <module name="Forge.1.21.11.main" options="-AmixinRefmapFile=epfragments73.refmap.json" />
+      <module name="Forge.1.21.11.test" options="-AmixinRefmapFile=epfragments73.refmap.json" />
+      <module name="Forge.1.21.3" options="-AmixinRefmapFile=epfragments73.refmap.json" />
+      <module name="Forge.1.21.3.main" options="-AmixinRefmapFile=epfragments73.refmap.json" />
+      <module name="Forge.1.21.3.test" options="-AmixinRefmapFile=epfragments73.refmap.json" />
+      <module name="Forge.1.21.5" options="-AmixinRefmapFile=epfragments73.refmap.json" />
+      <module name="Forge.1.21.5.main" options="-AmixinRefmapFile=epfragments73.refmap.json" />
+      <module name="Forge.1.21.5.test" options="-AmixinRefmapFile=epfragments73.refmap.json" />
+      <module name="Forge.1.21.8" options="-AmixinRefmapFile=epfragments73.refmap.json" />
+      <module name="Forge.1.21.8.main" options="-AmixinRefmapFile=epfragments73.refmap.json" />
+      <module name="Forge.1.21.8.test" options="-AmixinRefmapFile=epfragments73.refmap.json" />
     </option>
   </component>
 </project>

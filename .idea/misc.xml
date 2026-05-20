@@ -24,6 +24,7 @@
     <file type="web" url="file://$PROJECT_DIR$/Versions/Neo-Forge/1.21.5" />
     <file type="web" url="file://$PROJECT_DIR$/Versions/Neo-Forge/1.21.8" />
     <file type="web" url="file://$PROJECT_DIR$/Versions/Neo-Forge/26.1" />
+    <file type="web" url="file://$PROJECT_DIR$/Versions/Neo-Forge/26.2" />
   </component>
   <component name="ProjectRootManager" version="2" project-jdk-name="loom-ea-25" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
